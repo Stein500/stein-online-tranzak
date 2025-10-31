@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement Mobile Premium - MTN & Moov Bénin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* VARIABLES ET RESET */
+        :root {
+            --mtn-gold: linear-gradient(135deg, #ffcc00, #ffd700, #ffed4e);
+            --mtn-gold-dark: linear-gradient(135deg, #e6b800, #ffcc00);
+            --moov-pink: linear-gradient(135deg, #e6007e, #ff4da6, #ff80bf);
+            --moov-pink-dark: linear-gradient(135deg, #cc0066, #e6007e);
+            --deep-space: linear-gradient(135deg, #0c0c2b, #1a1a3a, #2d2d5a);
+            --cosmic-purple: linear-gradient(135deg, #4a00e0, #8e2de2);
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff00c8;
+            --electric-blue: #0066ff;
+            --pure-white: #ffffff;
+            --dark-matter: #0a0a1f;
+            --stardust: rgba(255, 255, 255, 0.1);
+            --galaxy-dust: rgba(255, 255, 255, 0.05);
+            --shadow-glow: 0 0 20px rgba(0, 243, 255, 0.5);
+            --shadow-glow-pink: 0 0 20px rgba(255, 0, 200, 0.5);
+            --shadow-glow-gold: 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--deep-space);
+            color: var(--pure-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* EFFET DE FOND COSMIQUE */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.15) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* PARTICULES ANIMÉES */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(10, 10, 31, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation: containerEntrance 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes containerEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        /* EFFET DE BORDURE LUMINEUSE */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--electric-blue), var(--neon-cyan));
+            border-radius: 27px;
+            z-index: -1;
+            animation: borderGlow 4s linear infinite;
+            background-size: 400% 400%;
+            filter: blur(10px);
+            opacity: 0.7;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, rgba(74, 0, 224, 0.8), rgba(142, 45, 226, 0.8));
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .logo:hover::before {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .mtn-logo {
+            background: var(--mtn-gold);
+            color: #000;
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        .moov-logo {
+            background: var(--moov-pink);
+            color: white;
+            animation: logoFloat 4s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--pure-white), #a8c0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* FORMULAIRE DE PAIEMENT */
+        .payment-form {
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--pure-white);
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        input:focus + .input-glow {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .input-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.1), transparent);
+            border-radius: 12px;
+            z-index: 0;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        /* SELECTEUR D'OPERATEUR */
+        .operator-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .operator-btn {
+            flex: 1;
+            padding: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--pure-white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .operator-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s;
+        }
+
+        .operator-btn:hover::before {
+            left: 100%;
+        }
+
+        .operator-btn.active {
+            border-color: transparent;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .operator-btn.mtn.active {
+            background: var(--mtn-gold);
+            color: #000;
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        .operator-btn.moov.active {
+            background: var(--moov-pink);
+            color: white;
+            box-shadow: var(--shadow-glow-pink);
+        }
+
+        /* OPTIONS DE MONTANT */
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .amount-option {
+            padding: 15px 10px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .amount-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .amount-option:hover::before {
+            height: 100%;
+        }
+
+        .amount-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .amount-option.selected {
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mtn .amount-option.selected {
+            background: var(--mtn-gold);
+            color: #000;
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        .moov .amount-option.selected {
+            background: var(--moov-pink);
+            color: white;
+            box-shadow: var(--shadow-glow-pink);
+        }
+
+        /* ACTIONS */
+        .actions {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--mtn-gold);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: var(--mtn-gold-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--pure-white);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* NOTICE DE SECURITE */
+        .security-notice {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 2rem;
+            padding: 15px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .security-notice::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: #2ecc71;
+        }
+
+        .security-notice i {
+            color: #2ecc71;
+            font-size: 1.2rem;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            padding: 1rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* ANIMATIONS AVANCÉES */
+        .pulse {
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 
+                    0 0 5px rgba(255, 204, 0, 0.7),
+                    0 0 10px rgba(255, 204, 0, 0.5),
+                    0 0 15px rgba(255, 204, 0, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 0 10px rgba(255, 204, 0, 0.8),
+                    0 0 20px rgba(255, 204, 0, 0.6),
+                    0 0 30px rgba(255, 204, 0, 0.4);
+            }
+            100% {
+                box-shadow: 
+                    0 0 5px rgba(255, 204, 0, 0.7),
+                    0 0 10px rgba(255, 204, 0, 0.5),
+                    0 0 15px rgba(255, 204, 0, 0.3);
+            }
+        }
+
+        .success-animation {
+            animation: successPulse 0.5s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* MEDIA QUERIES */
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 20px;
+            }
+            
+            .payment-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .logo-container {
+                gap: 1.5rem;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .amount-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        /* EFFET DE CHARGEMENT */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* EFFET DE VAGUES */
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 15vh;
+            min-height: 100px;
+            max-height: 150px;
+            opacity: 0.7;
+        }
+
+        .parallax > use {
+            animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+        }
+
+        .parallax > use:nth-child(1) {
+            animation-delay: -2s;
+            animation-duration: 7s;
+        }
+
+        .parallax > use:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 10s;
+        }
+
+        .parallax > use:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 13s;
+        }
+
+        .parallax > use:nth-child(4) {
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+
+        @keyframes move-forever {
+            0% {
+                transform: translate3d(-90px, 0, 0);
+            }
+            100% {
+                transform: translate3d(85px, 0, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particules de fond animées -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Vagues animées -->
+    <div class="waves">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="url(#gradient)" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="url(#gradient)" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="url(#gradient)" class="shape-fill"></path>
+            <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#4a00e0" />
+                    <stop offset="100%" stop-color="#8e2de2" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo mtn-logo pulse">
+                    <i class="fas fa-signal"></i>
+                </div>
+                <div class="logo moov-logo">
+                    <i class="fas fa-bolt"></i>
+                </div>
+            </div>
+            <h1>Paiement Mobile Premium</h1>
+            <p class="subtitle">MTN Bénin & Moov Bénin</p>
+        </header>
+        
+        <div class="payment-form">
+            <div class="form-group">
+                <label for="operator">Opérateur</label>
+                <div class="operator-selector">
+                    <button class="operator-btn mtn active" data-operator="mtn">
+                        <i class="fas fa-signal"></i> MTN Money
+                    </button>
+                    <button class="operator-btn moov" data-operator="moov">
+                        <i class="fas fa-bolt"></i> Moov Money
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Numéro de téléphone</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                    <input type="tel" id="phone" placeholder="Ex: 97 00 00 00" maxlength="10">
+                    <div class="input-glow"></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="amount">Montant (FCFA)</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <input type="number" id="amount" placeholder="Entrez le montant">
+                    <div class="input-glow"></div>
+                </div>
+                
+                <div class="amount-options">
+                    <div class="amount-option">500</div>
+                    <div class="amount-option">1000</div>
+                    <div class="amount-option">2000</div>
+                    <div class="amount-option">5000</div>
+                    <div class="amount-option">10000</div>
+                    <div class="amount-option">20000</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="service">Service</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-concierge-bell"></i>
+                    <select id="service">
+                        <option value="">Sélectionnez un service</option>
+                        <option value="recharge">Recharge de crédit</option>
+                        <option value="internet">Forfait Internet</option>
+                        <option value="transfert">Transfert d'argent</option>
+                        <option value="facture">Paiement de facture</option>
+                    </select>
+                    <div class="input-glow"></div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-secondary" id="cancel-btn">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+                <button class="btn btn-primary" id="pay-btn">
+                    <i class="fas fa-lock"></i> Payer maintenant
+                </button>
+            </div>
+            
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i>
+                <span>Transaction sécurisée avec cryptage SSL 256-bit</span>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Paiement Mobile Bénin Premium. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Créer des particules animées
+            createParticles();
+            
+            // Sélection d'opérateur
+            const operatorBtns = document.querySelectorAll('.operator-btn');
+            operatorBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    operatorBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Mettre à jour les couleurs selon l'opérateur
+                    const primaryBtn = document.querySelector('.btn-primary');
+                    if (this.dataset.operator === 'mtn') {
+                        primaryBtn.style.background = 'var(--mtn-gold)';
+                        primaryBtn.style.color = '#000';
+                        primaryBtn.style.boxShadow = '0 5px 15px rgba(255, 204, 0, 0.4)';
+                    } else {
+                        primaryBtn.style.background = 'var(--moov-pink)';
+                        primaryBtn.style.color = 'white';
+                        primaryBtn.style.boxShadow = '0 5px 15px rgba(230, 0, 126, 0.4)';
+                    }
+                });
+            });
+            
+            // Sélection de montant prédéfini
+            const amountOptions = document.querySelectorAll('.amount-option');
+            amountOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    amountOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('amount').value = this.textContent;
+                    
+                    // Animation de sélection
+                    this.classList.add('success-animation');
+                    setTimeout(() => {
+                        this.classList.remove('success-animation');
+                    }, 500);
+                });
+            });
+            
+            // Animation du bouton de paiement
+            const payBtn = document.getElementById('pay-btn');
+            payBtn.addEventListener('click', function() {
+                this.innerHTML = '<div class="loading"></div> Traitement en cours...';
+                this.disabled = true;
+                
+                // Simulation de traitement
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i> Paiement réussi!';
+                    this.style.background = 'linear-gradient(135deg, #2ecc71, #1abc9c)';
+                    this.classList.add('success-animation');
+                    
+                    // Réinitialiser après 3 secondes
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-lock"></i> Payer maintenant';
+                        this.disabled = false;
+                        this.style.background = '';
+                        this.classList.remove('success-animation');
+                        
+                        // Réinitialiser l'opérateur à MTN
+                        operatorBtns[0].click();
+                        
+                        // Réinitialiser les champs
+                        document.getElementById('phone').value = '';
+                        document.getElementById('amount').value = '';
+                        document.getElementById('service').value = '';
+                        amountOptions.forEach(opt => opt.classList.remove('selected'));
+                    }, 3000);
+                }, 2000);
+            });
+            
+            // Bouton d'annulation
+            const cancelBtn = document.getElementById('cancel-btn');
+            cancelBtn.addEventListener('click', function() {
+                // Réinitialiser l'opérateur à MTN
+                operatorBtns[0].click();
+                
+                // Réinitialiser les champs
+                document.getElementById('phone').value = '';
+                document.getElementById('amount').value = '';
+                document.getElementById('service').value = '';
+                amountOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Animation de réinitialisation
+                this.classList.add('success-animation');
+                setTimeout(() => {
+                    this.classList.remove('success-animation');
+                }, 500);
+            });
+            
+            // Fonction pour créer des particules animées
+            function createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                const particleCount = 50;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Taille aléatoire
+                    const size = Math.random() * 5 + 2;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Position de départ aléatoire
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    
+                    // Délai d'animation aléatoire
+                    particle.style.animationDelay = `${Math.random() * 15}s`;
+                    
+                    // Opacité aléatoire
+                    particle.style.opacity = Math.random() * 0.7 + 0.1;
+                    
+                    // Couleur aléatoire (bleu, rose, or)
+                    const colors = ['#00f3ff', '#ff00c8', '#ffcc00'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.background = randomColor;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

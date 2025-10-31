@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>TranZak Company </title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stein Online TranZak - Paiement Mobile Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a0a1f;
+            --secondary: #13132e;
+            --accent: #00f5ff;
+            --accent-glow: 0 0 25px rgba(0, 245, 255, 0.6);
+            --mtn-gold: linear-gradient(135deg, #ffcc00, #ffd700, #ffed4e);
+            --moov-pink: linear-gradient(135deg, #e6007e, #ff4da6, #ff80bf);
+            --success: #00ff95;
+            --danger: #ff2e63;
+            --text: #ffffff;
+            --text-secondary: #a0a0c0;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas pour effets de fond */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Particules flottantes */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container principal compact */
+        .main-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(10, 10, 31, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                var(--accent-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            animation: containerEntrance 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes containerEntrance {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Header avec branding Stein Online TranZak */
+        .brand-header {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(74, 0, 224, 0.15));
+            padding: 25px 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .company-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--mtn-gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #000;
+            box-shadow: var(--accent-glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .company-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 245, 255, 0.3);
+        }
+
+        .tagline {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Section de paiement compacte */
+        .payment-section {
+            padding: 25px 30px 30px;
+        }
+
+        .payment-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--accent-glow);
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Sélecteur d'opérateur compact */
+        .operator-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .operator-btn {
+            padding: 14px;
+            border: 2px solid var(--card-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .operator-btn.active {
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .operator-btn.mtn.active {
+            background: var(--mtn-gold);
+            color: #000;
+        }
+
+        .operator-btn.moov.active {
+            background: var(--moov-pink);
+            color: white;
+        }
+
+        /* Champs de formulaire */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            z-index: 2;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.2);
+        }
+
+        /* Options de montant compactes */
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .amount-option {
+            padding: 12px 8px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .amount-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .amount-option.selected {
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .mtn .amount-option.selected {
+            background: var(--mtn-gold);
+            color: #000;
+        }
+
+        .moov .amount-option.selected {
+            background: var(--moov-pink);
+            color: white;
+        }
+
+        /* Boutons d'action */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--mtn-gold);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            border: 1px solid var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        /* Indicateur de sécurité */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 12px;
+            background: rgba(0, 255, 149, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 149, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .security-badge i {
+            color: var(--success);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 30px;
+            border-top: 1px solid var(--card-border);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Notification flottante */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: var(--accent-glow);
+            transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        /* Loader quantique */
+        .quantum-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 31, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .quantum-loader.active {
+            display: flex;
+        }
+
+        .quantum-sphere {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, var(--accent), #0066ff);
+            border-radius: 50%;
+            animation: quantumPulse 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes quantumPulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px var(--accent); }
+            100% { transform: scale(1.2); box-shadow: 0 0 40px #0066ff; }
+        }
+
+        .loader-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .main-container {
+                border-radius: 20px;
+            }
+            
+            .brand-header, .payment-section {
+                padding: 20px 25px;
+            }
+            
+            .operator-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .amount-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas pour effets de fond -->
+    <canvas id="bgCanvas"></canvas>
+    
+    <!-- Particules flottantes -->
+    <div class="floating-particles" id="particlesContainer"></div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Paiement réussi avec Stein Online TranZak!</span>
+    </div>
+    
+    <!-- Loader quantique -->
+    <div class="quantum-loader" id="quantumLoader">
+        <div class="quantum-sphere"></div>
+        <p class="loader-text" id="loaderText">Initialisation du système...</p>
+    </div>
+
+    <!-- Container principal -->
+    <div class="main-container">
+        <!-- Header avec branding -->
+        <div class="brand-header">
+            <div class="company-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h1 class="company-name">Stein Online TranZak</h1>
+            </div>
+            <p class="tagline">PAIEMENT MOBILE ULTRA-SÉCURISÉ</p>
+        </div>
+        
+        <!-- Section de paiement -->
+        <div class="payment-section">
+            <!-- Opérateurs -->
+            <div class="payment-card">
+                <h3 class="card-title">
+                    <i class="fas fa-sim-card"></i>
+                    OPÉRATEUR MOBILE
+                </h3>
+                <div class="operator-selector">
+                    <button class="operator-btn mtn active" data-operator="mtn">
+                        <i class="fas fa-signal"></i> MTN Money
+                    </button>
+                    <button class="operator-btn moov" data-operator="moov">
+                        <i class="fas fa-bolt"></i> Moov Money
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Informations de paiement -->
+            <div class="payment-card">
+                <h3 class="card-title">
+                    <i class="fas fa-credit-card"></i>
+                    INFORMATIONS DE PAIEMENT
+                </h3>
+                
+                <div class="form-group">
+                    <div class="input-with-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                        <input type="tel" id="phoneNumber" placeholder="Numéro (ex: 97 00 00 00)" maxlength="10">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="input-with-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <input type="number" id="amount" placeholder="Montant en FCFA">
+                    </div>
+                    <div class="amount-options">
+                        <div class="amount-option">500</div>
+                        <div class="amount-option">1000</div>
+                        <div class="amount-option">2000</div>
+                        <div class="amount-option">5000</div>
+                        <div class="amount-option">10000</div>
+                        <div class="amount-option">20000</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="input-with-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                        <select id="serviceType">
+                            <option value="">Type de service</option>
+                            <option value="recharge">Recharge de crédit</option>
+                            <option value="internet">Forfait Internet</option>
+                            <option value="transfert">Transfert d'argent</option>
+                            <option value="facture">Paiement de facture</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Boutons d'action -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="cancelBtn">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+                <button class="btn btn-primary" id="payBtn">
+                    <i class="fas fa-lock"></i> Payer Maintenant
+                </button>
+            </div>
+            
+            <!-- Indicateur de sécurité -->
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Transaction cryptée SSL 256-bit • Stein Online TranZak</span>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2025 Stein Online TranZak. Tous droits réservés.</p>
+            <p>Solution de paiement quantique sécurisée</p>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // SYSTÈME D'EFFETS VISUELS
+        // =============================================
+        
+        class VisualEffects {
+            constructor() {
+                this.canvas = document.getElementById('bgCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.mouse = { x: 0, y: 0, radius: 100 };
+                
+                this.init();
+            }
+            
+            init() {
+                this.resizeCanvas();
+                this.createParticles();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resizeCanvas());
+                window.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticles() {
+                // Créer des particules flottantes
+                const particlesContainer = document.getElementById('particlesContainer');
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    
+                    const size = Math.random() * 4 + 2;
+                    const colors = ['#00f5ff', '#ffcc00', '#e6007e'];
+                    
+                    particle.style.cssText = `
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        left: ${Math.random() * 100}vw;
+                        animation-delay: ${Math.random() * 15}s;
+                    `;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+                
+                // Créer des particules pour le canvas
+                for (let i = 0; i < 50; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        size: Math.random() * 2 + 1,
+                        speedX: Math.random() * 1 - 0.5,
+                        speedY: Math.random() * 1 - 0.5,
+                        color: `rgba(0, 245, 255, ${Math.random() * 0.3 + 0.1})`
+                    });
+                }
+            }
+            
+            animate() {
+                this.ctx.fillStyle = 'rgba(10, 10, 31, 0.05)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.particles.forEach(particle => {
+                    // Mouvement
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Rebond sur les bords
+                    if (particle.x < 0 || particle.x > this.canvas.width) particle.speedX *= -1;
+                    if (particle.y < 0 || particle.y > this.canvas.height) particle.speedY *= -1;
+                    
+                    // Interaction souris
+                    const dx = particle.x - this.mouse.x;
+                    const dy = particle.y - this.mouse.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < this.mouse.radius) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (this.mouse.radius - distance) / this.mouse.radius;
+                        particle.x += Math.cos(angle) * force * 2;
+                        particle.y += Math.sin(angle) * force * 2;
+                    }
+                    
+                    // Dessiner
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.fill();
+                });
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // =============================================
+        // SYSTÈME DE PAIEMENT STEIN ONLINE TRANZAK
+        // =============================================
+        
+        class SteinPaymentSystem {
+            constructor() {
+                this.currentOperator = 'mtn';
+                this.quantumLoader = document.getElementById('quantumLoader');
+                this.loaderText = document.getElementById('loaderText');
+                this.notification = document.getElementById('notification');
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.showWelcomeEffect();
+            }
+            
+            setupEventListeners() {
+                // Sélection d'opérateur
+                document.querySelectorAll('.operator-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.selectOperator(e.target);
+                    });
+                });
+                
+                // Sélection de montant
+                document.querySelectorAll('.amount-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        this.selectAmount(e.target);
+                    });
+                });
+                
+                // Bouton de paiement
+                document.getElementById('payBtn').addEventListener('click', () => {
+                    this.processPayment();
+                });
+                
+                // Bouton d'annulation
+                document.getElementById('cancelBtn').addEventListener('click', () => {
+                    this.resetForm();
+                });
+            }
+            
+            selectOperator(button) {
+                // Retirer la classe active de tous les boutons
+                document.querySelectorAll('.operator-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Ajouter la classe active au bouton cliqué
+                button.classList.add('active');
+                this.currentOperator = button.dataset.operator;
+                
+                // Mettre à jour la couleur du bouton principal
+                const payBtn = document.getElementById('payBtn');
+                if (this.currentOperator === 'mtn') {
+                    payBtn.style.background = 'var(--mtn-gold)';
+                    payBtn.style.color = '#000';
+                } else {
+                    payBtn.style.background = 'var(--moov-pink)';
+                    payBtn.style.color = 'white';
+                }
+                
+                // Effet visuel
+                this.createRippleEffect(button);
+            }
+            
+            selectAmount(option) {
+                // Retirer la sélection de tous les montants
+                document.querySelectorAll('.amount-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Ajouter la sélection
+                option.classList.add('selected');
+                
+                // Mettre à jour le champ de montant
+                document.getElementById('amount').value = option.textContent;
+                
+                // Effet visuel
+                option.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    option.style.transform = '';
+                }, 150);
+            }
+            
+            async processPayment() {
+                const phone = document.getElementById('phoneNumber').value;
+                const amount = document.getElementById('amount').value;
+                const service = document.getElementById('serviceType').value;
+                
+                // Validation
+                if (!phone || !amount || !service) {
+                    this.showNotification('Veuillez remplir tous les champs', 'error');
+                    return;
+                }
+                
+                // Afficher le loader
+                this.showLoader('Initialisation du paiement quantique...');
+                
+                // Simulation des étapes de paiement
+                const steps = [
+                    { delay: 1500, message: 'Connexion au réseau Stein...' },
+                    { delay: 1800, message: 'Chiffrement des données...' },
+                    { delay: 2200, message: 'Validation de la transaction...' },
+                    { delay: 2000, message: 'Finalisation du paiement...' }
+                ];
+                
+                for (let i = 0; i < steps.length; i++) {
+                    await this.simulateStep(steps[i]);
+                }
+                
+                // Succès
+                this.hideLoader();
+                this.showSuccessEffect();
+            }
+            
+            simulateStep(step) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        this.loaderText.textContent = step.message;
+                        resolve();
+                    }, step.delay);
+                });
+            }
+            
+            showLoader(message) {
+                this.loaderText.textContent = message;
+                this.quantumLoader.classList.add('active');
+            }
+            
+            hideLoader() {
+                this.quantumLoader.classList.remove('active');
+            }
+            
+            showNotification(message, type = 'success') {
+                const notification = this.notification;
+                const icon = notification.querySelector('i');
+                const text = notification.querySelector('span');
+                
+                // Mettre à jour le contenu
+                text.textContent = message;
+                
+                // Changer l'icône selon le type
+                if (type === 'error') {
+                    icon.className = 'fas fa-exclamation-circle';
+                    icon.style.color = 'var(--danger)';
+                    notification.style.borderColor = 'var(--danger)';
+                } else {
+                    icon.className = 'fas fa-check-circle';
+                    icon.style.color = 'var(--success)';
+                    notification.style.borderColor = 'var(--accent)';
+                }
+                
+                // Afficher la notification
+                notification.classList.add('show');
+                
+                // Masquer après 5 secondes
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }
+            
+            showWelcomeEffect() {
+                setTimeout(() => {
+                    this.showNotification('Bienvenue sur Stein Online TranZak!');
+                }, 1000);
+            }
+            
+            showSuccessEffect() {
+                // Notification de succès
+                this.showNotification('Paiement réussi! Merci pour votre confiance.');
+                
+                // Effet de confetti
+                this.createConfetti();
+                
+                // Vibration (si supporté)
+                if (navigator.vibrate) {
+                    navigator.vibrate([100, 50, 100]);
+                }
+                
+                // Réinitialiser après délai
+                setTimeout(() => {
+                    this.resetForm();
+                }, 4000);
+            }
+            
+            createRippleEffect(element) {
+                const ripple = document.createElement('div');
+                const rect = element.getBoundingClientRect();
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    background: rgba(0, 245, 255, 0.6);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    transform: translate(-50%, -50%);
+                    animation: ripple 0.6s ease-out;
+                `;
+                
+                ripple.style.left = `${rect.left + rect.width / 2}px`;
+                ripple.style.top = `${rect.top + rect.height / 2}px`;
+                
+                document.body.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+            
+            createConfetti() {
+                const colors = ['#00f5ff', '#ffcc00', '#e6007e', '#00ff95', '#ffffff'];
+                
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed;
+                            width: 8px;
+                            height: 8px;
+                            background: ${colors[Math.floor(Math.random() * colors.length)]};
+                            border-radius: 1px;
+                            top: -10px;
+                            left: ${Math.random() * 100}vw;
+                            pointer-events: none;
+                            z-index: 1000;
+                        `;
+                        
+                        document.body.appendChild(confetti);
+                        
+                        // Animation
+                        confetti.animate([
+                            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                            { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                        ], {
+                            duration: Math.random() * 3000 + 2000,
+                            easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
+                        }).onfinish = () => {
+                            confetti.remove();
+                        };
+                    }, i * 100);
+                }
+            }
+            
+            resetForm() {
+                document.getElementById('phoneNumber').value = '';
+                document.getElementById('amount').value = '';
+                document.getElementById('serviceType').value = '';
+                
+                document.querySelectorAll('.amount-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Réinitialiser à MTN
+                const mtnBtn = document.querySelector('.operator-btn.mtn');
+                this.selectOperator(mtnBtn);
+                
+                this.showNotification('Formulaire réinitialisé');
+            }
+        }
+        
+        // =============================================
+        // INITIALISATION
+        // =============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Démarrer les effets visuels
+            const visualEffects = new VisualEffects();
+            
+            // Démarrer le système de paiement
+            const paymentSystem = new SteinPaymentSystem();
+            
+            console.log('🚀 Stein Online TranZak - Système de paiement initialisé');
+            console.log('✨ Interface premium activée');
+            console.log('🎯 Copyright 2025 - Stein Online TranZak');
+        });
+        
+        // Ajouter le CSS pour l'effet ripple
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: translate(-50%, -50%) scale(10);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(rippleStyle);
+    </script>
+</body>
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
