@@ -1,0 +1,8 @@
+stein-online-tranzak/
+├── .nojekyll          ⬅️ NOUVEAU FICHIER (vide)
+├── index.html         ⬅️ Votre code principal
+├── README.md
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── images/
